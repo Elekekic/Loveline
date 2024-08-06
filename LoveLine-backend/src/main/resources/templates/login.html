@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body>
+<h1>Login</h1>
+<form action="/auth/login_form" method="post" th:object="${userLoginDTO}">
+    <label for="email">Email:</label>
+    <input type="text" id="email" th:field="*{email}" required />
+    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" th:field="*{password}" required />
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div><br>
+
+    <button type="submit">Login</button>
+</form>
+<p th:if="${error}" style="color: red;">[[${error}]]</p>
+<div>
+    <p>Or log in with:</p>
+    <a href="http://localhost:8080/oauth2/authorization/github">Login with GitHub</a><br>
+    <a href="http://localhost:8080/oauth2/authorization/google">Login with Google</a>
+</div>
+</body>
+</html>
