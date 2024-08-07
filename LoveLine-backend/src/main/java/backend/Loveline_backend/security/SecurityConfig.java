@@ -64,6 +64,7 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
                                 .userService(oAuth2UserService())
                         )
+                        .defaultSuccessUrl("/home", true)
                         .successHandler(oAuth2SuccessHandler())
                 );
 

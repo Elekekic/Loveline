@@ -2,6 +2,7 @@ package backend.Loveline_backend.security;
 
 import backend.Loveline_backend.entity.User;
 import backend.Loveline_backend.service.AuthService;
+import backend.Loveline_backend.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,13 +27,16 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         logger.info("OAuth2SuccessHandler called for authentication: {}", authentication.getName());
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
         Map<String, Object> attributes = oauth2User.getAttributes();
         logger.info("attributes: {}", attributes);
-        String email = (String) attributes.get("email"); // Adjust based on OAuth2 user details
+        String email = (String) attributes.get("email");
 
         try {
             // Generate the token
@@ -42,10 +46,14 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             // Set the token in the response header
             response.setHeader("Authorization", "Bearer " + authResponse.getToken());
 
+            // Set the user in the response body
+            User user = userService.getUserByEmail(email);
+            authResponse.setUser(user);
 
-            response.sendRedirect("/home");
             response.setContentType("application/json");
             response.getWriter().write(new ObjectMapper().writeValueAsString(authResponse));
+
+            logger.info("Authentication successful: {}", authResponse);
         } catch (Exception e) {
             logger.error("Error during OAuth2 user authentication: ", e);
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Authentication failed");

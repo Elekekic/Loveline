@@ -56,7 +56,11 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
             profilePictureUrl = getRandomDefaultProfilePictureUrl(); // Use a random default picture URL
         }
 
-        User user = processOAuth2User(registrationId, attributes, profilePictureUrl, accessToken);
+        // Create a modifiable copy of the attributes map because if not, the Github access will give problems with the email
+        Map<String, Object> modifiableAttributes = new HashMap<>(attributes);
+
+
+        User user = processOAuth2User(registrationId, modifiableAttributes, profilePictureUrl, accessToken);
 
         // Determine the attribute key for username based on provider
         String userNameAttributeName;
@@ -68,7 +72,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority("USER")),
-                attributes, userNameAttributeName);
+                modifiableAttributes, userNameAttributeName);
     }
 
 
@@ -117,6 +121,14 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
         if (email == null) {
             // Attempt to fetch email using an additional request to GitHub API
             email = fetchGitHubEmail(accessToken);
+            logger.info("Email fetched from GitHub: {}", email);
+            attributes.put("email", email);
+
+            if (email == null) {
+                throw new IllegalArgumentException("Email not found in attributes and could not be fetched");
+            }
+        } else {
+            logger.info("Email found in attributes: {}", email);
         }
 
         // Retrieve username safely
@@ -132,10 +144,6 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
             if (username == null) {
                 username = email;
             }
-        }
-
-        if (email == null) {
-            throw new IllegalArgumentException("Email not found in attributes and could not be fetched");
         }
 
         // Retrieve or create user
