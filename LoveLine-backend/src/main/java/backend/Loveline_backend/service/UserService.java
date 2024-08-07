@@ -6,13 +6,19 @@ import backend.Loveline_backend.exception.BadRequestException;
 import backend.Loveline_backend.exception.UserNotFoundException;
 import backend.Loveline_backend.repository.UserRepository;
 import com.cloudinary.Cloudinary;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -104,7 +110,7 @@ public class UserService {
                 user.setPfp(userDTO.getPfp()); // Assuming userDTO has a field for profile picture URL
             }
             userRepository.save(user);
-            // sendMailProfileCreated(user.getEmail(), user.getName(), user.getSurname());
+            sendMailProfileCreated(user.getEmail(), user.getName(), user.getSurname());
             return "User with ID: " + user.getId() + " created";
         }
     }
@@ -146,4 +152,55 @@ public class UserService {
         int index = ThreadLocalRandom.current().nextInt(defaultProfilePictureUrls.size());
         return defaultProfilePictureUrls.get(index);
     }
+
+
+    // SEND EMAIL "PROFILE CREATED" METHOD
+    private void sendMailProfileCreated(String email, String name, String surname) {
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            helper.setTo(email);
+            helper.setSubject(String.format("Loveline is happy to have you %s! \uD83E\uDEE3", name));
+
+
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+            String formattedDate = currentDate.format(formatter);
+
+            String htmlMsg = String.format(
+                    "<html>" +
+                            "<body style='text-align: center; font-family: Poppins, sans-serif;'>" +
+                            "<div style='display: inline-block; width: 80%%; max-width: 700px; margin: 20px auto; padding: 20px; border: 1px solid black; border-radius: 20px; text-align: left;'>" +
+                            "<img src='cid:welcomeImage' style='width: 100%%; height: auto; max-width: 900px; border-radius: 16px;'>" +
+                            "<p>%s 🗓 </p>" +
+                            "<h1 style='font-size: 30px; color: #FF6D1F;'>Dear %s %s,</h1>" +
+                            "<h3>Your Uberly account has been successfully created! Congrats! 🎉<br>" +
+                            "We can't wait to see you on our platform!</h3>" +
+                            "<p>You can now access the system using the credentials you provided during registration. Remember, you are a <strong>%s</strong> of Uberly. If you have any questions or need assistance, please do not hesitate to contact us at <a href=\"mailto:uberlyteam@gmail.com\">uberlyteam@gmail.com</a> 📩</p>" +
+                            "<p>Thank you for registering! Enjoy your journeys with new people. 📌</p>" +
+                            "<p>Best regards,</p>" +
+                            "<p>The Uberly Team</p>" +
+                            "<img src='cid:logoImage' style='width: 200px; height: auto;'>" +
+                            "<p style='font-size: 12px; margin-top: 20px;'>© 2024 Uberly Team</p>" +
+                            "<p style='font-size: 12px;'>Trieste, Italy</p>" +
+                            "</div>" +
+                            "</body>" +
+                            "</html>", formattedDate, name, surname, role);
+
+
+            helper.setText(htmlMsg, true);
+
+            ClassPathResource imageResource = new ClassPathResource("static/images/welcome.jpg");
+            helper.addInline("welcomeImage", imageResource);
+
+            ClassPathResource imageResource2 = new ClassPathResource("static/images/logo.png");
+            helper.addInline("logoImage", imageResource2);
+
+            javaMailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            logger.error("Error sending email to {}", email, e);
+        }
+    }
+
 }

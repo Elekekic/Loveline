@@ -2,8 +2,6 @@ package backend.Loveline_backend.controller;
 
 import backend.Loveline_backend.dto.UserDTO;
 import backend.Loveline_backend.dto.UserLoginDTO;
-import backend.Loveline_backend.entity.User;
-import backend.Loveline_backend.exception.BadRequestException;
 import backend.Loveline_backend.security.AuthenticationResponse;
 import backend.Loveline_backend.service.AuthService;
 import backend.Loveline_backend.service.UserService;
@@ -21,7 +19,6 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/auth")
@@ -43,6 +40,16 @@ public class AuthController {
     public String loginPage(Model model) {
         model.addAttribute("userLoginDTO", new UserLoginDTO());
         return "login";
+    }
+
+    @GetMapping("/logout")
+    public String showLogoutPage() {
+        return "logout";
+    }
+
+    @GetMapping("/logout-success")
+    public String logoutSuccessPage() {
+        return "logout-success";
     }
 
     // REGISTRATION METHOD
@@ -92,6 +99,6 @@ public class AuthController {
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/login?logout";
+        return "redirect:/auth/logout-success";
     }
 }

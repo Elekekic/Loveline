@@ -1,8 +1,6 @@
 package backend.Loveline_backend.security;
 
 import backend.Loveline_backend.entity.User;
-import backend.Loveline_backend.exception.UnauthorizedException;
-import backend.Loveline_backend.exception.UserNotFoundException;
 import backend.Loveline_backend.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

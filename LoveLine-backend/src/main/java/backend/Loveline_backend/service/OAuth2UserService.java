@@ -153,7 +153,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
             user = new User();
             user.setEmail(email);
             user.setName(name);
-            user.setLoverId(generateUniqueLoverId()); // Set a unique 5-digit loverId
+            user.setLoverId(generateUniqueLoverId()); // Method to set a unique 5-digit loverId
             user.setUsername(username);
             user.setProvider(registrationId);
             user.setProviderId(providerId);

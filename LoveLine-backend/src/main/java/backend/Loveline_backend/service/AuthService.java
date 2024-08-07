@@ -1,7 +1,6 @@
 package backend.Loveline_backend.service;
 
 import backend.Loveline_backend.dto.UserLoginDTO;
-import backend.Loveline_backend.exception.InvalidPasswordException;
 import backend.Loveline_backend.exception.UnauthorizedException;
 import backend.Loveline_backend.exception.UserNotFoundException;
 import backend.Loveline_backend.security.AuthenticationResponse;
@@ -10,26 +9,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
-import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import backend.Loveline_backend.entity.User;
-import backend.Loveline_backend.repository.UserRepository;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class AuthService {

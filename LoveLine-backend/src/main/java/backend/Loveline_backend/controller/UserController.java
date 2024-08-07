@@ -1,14 +1,9 @@
 package backend.Loveline_backend.controller;
 
-import backend.Loveline_backend.dto.UserDTO;
 import backend.Loveline_backend.entity.User;
-import backend.Loveline_backend.exception.BadRequestException;
 import backend.Loveline_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.security.core.Authentication;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
