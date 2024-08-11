@@ -30,23 +30,27 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    // REGISTER PAGE
     @GetMapping("/register")
     public String registerPage(Model model) {
         model.addAttribute("userDTO", new UserDTO());
         return "register";
     }
 
+    // LOGIN PAGE
     @GetMapping("/login")
     public String loginPage(Model model) {
         model.addAttribute("userLoginDTO", new UserLoginDTO());
         return "login";
     }
 
+    // LOGOUT PAGE
     @GetMapping("/logout")
     public String showLogoutPage() {
         return "logout";
     }
 
+    // LOGOUT SUCCESS PAGE
     @GetMapping("/logout-success")
     public String logoutSuccessPage() {
         return "logout-success";
@@ -72,6 +76,7 @@ public class AuthController {
         }
     }
 
+    // LOGIN MANUALLY METHOD
     @PostMapping("/login_form")
     public ResponseEntity<AuthenticationResponse> login(@ModelAttribute @Validated UserLoginDTO userLoginDTO, BindingResult bindingResult, Model model, HttpServletResponse response) {
         System.out.println("This is a test message.");
@@ -93,6 +98,7 @@ public class AuthController {
         }
     }
 
+    // LOGOUT METHOD
     @PostMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

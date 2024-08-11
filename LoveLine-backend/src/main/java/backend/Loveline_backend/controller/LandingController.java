@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LandingController {
 
+    // LANDING PAGE
     @GetMapping("/")
     public String landing() {
         return "Welcome to Loveline";

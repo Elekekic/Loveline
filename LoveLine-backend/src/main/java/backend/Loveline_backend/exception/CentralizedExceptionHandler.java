@@ -43,4 +43,30 @@ public class CentralizedExceptionHandler extends ResponseEntityExceptionHandler 
         error.setDataErrore(LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(EventNotFoundException.class)
+    public ResponseEntity<Object> EventNotFoundHandler (EventNotFoundException exception){
+        Error error = new Error();
+        error.setMessaggio(exception.getMessage());
+        error.setDataErrore(LocalDateTime.now());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(TImelineNotFoundException.class)
+    public ResponseEntity<Object> TImelineNotFoundEventNotFoundHandler (TImelineNotFoundException exception){
+        Error error = new Error();
+        error.setMessaggio(exception.getMessage());
+        error.setDataErrore(LocalDateTime.now());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EventAlreadyExistsException.class)
+    public ResponseEntity<Object> EventAlreadyExistsHandler (EventAlreadyExistsException exception){
+        Error error = new Error();
+        error.setMessaggio(exception.getMessage());
+        error.setDataErrore(LocalDateTime.now());
+        return new ResponseEntity<>(error, HttpStatus.NOT_ACCEPTABLE);
+    }
+
+
 }

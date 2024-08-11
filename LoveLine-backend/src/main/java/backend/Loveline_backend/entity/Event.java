@@ -26,5 +26,9 @@ public class Event {
     @JoinColumn(name = "timeline_id")
     private Timeline timeline;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
 }

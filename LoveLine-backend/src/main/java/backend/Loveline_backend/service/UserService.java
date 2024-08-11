@@ -1,8 +1,10 @@
 package backend.Loveline_backend.service;
 
 import backend.Loveline_backend.dto.UserDTO;
+import backend.Loveline_backend.entity.Event;
 import backend.Loveline_backend.entity.User;
 import backend.Loveline_backend.exception.BadRequestException;
+import backend.Loveline_backend.exception.EventNotFoundException;
 import backend.Loveline_backend.exception.UserNotFoundException;
 import backend.Loveline_backend.repository.UserRepository;
 import com.cloudinary.Cloudinary;
@@ -46,7 +48,6 @@ public class UserService {
 
     // QUERY - FIND USER BY USERNAME
     public User getUserByUsername(String username) {
-        logger.info("Retrieving user by username: {}", username);
         Optional<User> userOptional = userRepository.findByUsername(username);
 
         if (userOptional.isPresent()) {
@@ -58,7 +59,6 @@ public class UserService {
 
     // QUERY - FIND USER BY EMAIL
     public User getUserByEmail(String email) {
-        logger.info("Retrieving user by email: {}", email);
         Optional<User> userOptional = userRepository.findByEmail(email);
 
         if (userOptional.isPresent()) {
@@ -107,26 +107,83 @@ public class UserService {
             if (userDTO.getPfp() == null || userDTO.getPfp().isEmpty()) {
                 user.setPfp(getRandomDefaultProfilePictureUrl());
             } else {
-                user.setPfp(userDTO.getPfp()); // Assuming userDTO has a field for profile picture URL
+                user.setPfp(userDTO.getPfp());
             }
             userRepository.save(user);
-            sendMailProfileCreated(user.getEmail(), user.getName(), user.getSurname());
+//            sendMailProfileCreated(user.getEmail(), user.getName(), user.getSurname());
             return "User with ID: " + user.getId() + " created";
         }
     }
+
+    // UPDATE USER METHOD
+    public String updateUser(int id, UserDTO userDTO) {
+
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (userOptional.isEmpty()) {
+            throw new UserNotFoundException("User with ID: " + id + " not found");
+        }
+
+        User user = userOptional.get();
+
+        // Check if the email is being updated and if it already exists for another user
+        if (!user.getEmail().equals(userDTO.getEmail())) {
+            Optional<User> existingUserWithEmail = userRepository.findByEmail(userDTO.getEmail());
+            if (existingUserWithEmail.isPresent()) {
+                throw new BadRequestException("This email is already associated with another account");
+            }
+            user.setEmail(userDTO.getEmail());
+        }
+
+
+        user.setUsername(userDTO.getUsername());
+        user.setName(userDTO.getName());
+        user.setSurname(userDTO.getSurname());
+        user.setLoverId(user.getLoverId()); // lover id will never change
+
+        // Update password if provided
+        if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        }
+
+        // Update profile picture URL if provided, otherwise keep the existing one
+        if (userDTO.getPfp() != null) {
+            user.setPfp(userDTO.getPfp());
+        }
+
+        // Save the updated user back to the repository
+        userRepository.save(user);
+
+        return "The user: " + user.getUsername() + " has been updated";
+    }
+
+
+    // DELETE USER METHOD
+    public String deleteUser(int id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+
+            userOptional.get().setMyLover(null);
+            userOptional.get().setTimeline(null);
+            userOptional.get().setEvents(null);
+
+            userRepository.deleteById(id);
+            return "The user: " + userOptional.get().getUsername() + " has been deleted";
+        } else throw new UserNotFoundException("User with id: " + id + " not found");
+    }
+
 
     // GENERATE UNIQUE 5-DIGIT LOVER ID
     private int generateUniqueLoverId() {
         int loverId;
         do {
-            loverId = ThreadLocalRandom.current().nextInt(10000, 100000); // Generate number between 10000 and 99999
+            loverId = ThreadLocalRandom.current().nextInt(10000, 100000);
         } while (usedLoverIds.contains(loverId));
         usedLoverIds.add(loverId);
         return loverId;
     }
 
     private String getRandomDefaultProfilePictureUrl() {
-        // Assuming you have a list of default profile picture URLs as a constant or configuration
         List<String> defaultProfilePictureUrls = List.of(
                 "https://api.dicebear.com/9.x/glass/svg?seed=Luna",
                 "https://api.dicebear.com/9.x/glass/svg?seed=Bear",
@@ -155,52 +212,43 @@ public class UserService {
 
 
     // SEND EMAIL "PROFILE CREATED" METHOD
-    private void sendMailProfileCreated(String email, String name, String surname) {
-        try {
-            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-
-            helper.setTo(email);
-            helper.setSubject(String.format("Loveline is happy to have you %s! \uD83E\uDEE3", name));
-
-
-            LocalDate currentDate = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-            String formattedDate = currentDate.format(formatter);
-
-            String htmlMsg = String.format(
-                    "<html>" +
-                            "<body style='text-align: center; font-family: Poppins, sans-serif;'>" +
-                            "<div style='display: inline-block; width: 80%%; max-width: 700px; margin: 20px auto; padding: 20px; border: 1px solid black; border-radius: 20px; text-align: left;'>" +
-                            "<img src='cid:welcomeImage' style='width: 100%%; height: auto; max-width: 900px; border-radius: 16px;'>" +
-                            "<p>%s 🗓 </p>" +
-                            "<h1 style='font-size: 30px; color: #FF6D1F;'>Dear %s %s,</h1>" +
-                            "<h3>Your Uberly account has been successfully created! Congrats! 🎉<br>" +
-                            "We can't wait to see you on our platform!</h3>" +
-                            "<p>You can now access the system using the credentials you provided during registration. Remember, you are a <strong>%s</strong> of Uberly. If you have any questions or need assistance, please do not hesitate to contact us at <a href=\"mailto:uberlyteam@gmail.com\">uberlyteam@gmail.com</a> 📩</p>" +
-                            "<p>Thank you for registering! Enjoy your journeys with new people. 📌</p>" +
-                            "<p>Best regards,</p>" +
-                            "<p>The Uberly Team</p>" +
-                            "<img src='cid:logoImage' style='width: 200px; height: auto;'>" +
-                            "<p style='font-size: 12px; margin-top: 20px;'>© 2024 Uberly Team</p>" +
-                            "<p style='font-size: 12px;'>Trieste, Italy</p>" +
-                            "</div>" +
-                            "</body>" +
-                            "</html>", formattedDate, name, surname, role);
-
-
-            helper.setText(htmlMsg, true);
-
-            ClassPathResource imageResource = new ClassPathResource("static/images/welcome.jpg");
-            helper.addInline("welcomeImage", imageResource);
-
-            ClassPathResource imageResource2 = new ClassPathResource("static/images/logo.png");
-            helper.addInline("logoImage", imageResource2);
-
-            javaMailSender.send(mimeMessage);
-        } catch (MessagingException e) {
-            logger.error("Error sending email to {}", email, e);
-        }
-    }
-
+//    private void sendMailProfileCreated(String email, String name, String surname) {
+//        try {
+//            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+//            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+//
+//            helper.setTo(email);
+//            helper.setSubject(String.format("Loveline is happy to have you %s! \uD83E\uDEE3", name));
+//
+//            String htmlMsg = String.format(
+//                    "<html>" +
+//                            "<body style='text-align: center; font-family: Poppins, sans-serif;'>" +
+//                            "<img src='cid:welcomeImage' style='width: 100%%; height: auto; max-width: 900px; border-radius: 16px;'>" +
+//                            "<h1Dear %s %s,</h1>" +
+//                            "<h3>Your Loveline account has been successfully created! Congrats! 🎉<br>" +
+//                            "We can't wait to see you on our platform!</h3>" +
+//                            "<p>You can now access the system using the credentials you provided during registration.</p>" +
+//                            "<p></p>" +
+//                            "<p>Best regards,</p>" +
+//                            "<p>The Loveline Team</p>" +
+//                            "<img src='cid:logoImage' style='width: 200px; height: auto;'>" +
+//                            "<p style='font-size: 12px; margin-top: 20px;'>© 2024 LoveLine</p>" +
+//                            "<p style='font-size: 12px;'>Trieste, Italy</p>" +
+//                            "</body>" +
+//                            "</html>", name, surname);
+//
+//
+//            helper.setText(htmlMsg, true);
+//
+//            ClassPathResource imageResource = new ClassPathResource("static/images/welcome.jpg");
+//            helper.addInline("welcomeImage", imageResource);
+//
+//            ClassPathResource imageResource2 = new ClassPathResource("static/images/logo.png");
+//            helper.addInline("logoImage", imageResource2);
+//
+//            javaMailSender.send(mimeMessage);
+//        } catch (MessagingException e) {
+//            logger.error("Error sending email to {}", email, e);
+//        }
+//    }
 }

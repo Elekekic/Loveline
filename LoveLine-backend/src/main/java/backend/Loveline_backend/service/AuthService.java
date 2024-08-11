@@ -30,7 +30,6 @@ public class AuthService {
 
     // Existing method to authenticate user and create token with login credentials
     public AuthenticationResponse authenticateUserAndCreateToken(UserLoginDTO userLoginDTO, HttpServletResponse response) {
-        logger.info("Authenticating user: {}", userLoginDTO.getEmail());
 
         User user = userService.getUserByEmail(userLoginDTO.getEmail());
         if (user == null) {
@@ -48,13 +47,11 @@ public class AuthService {
 
     // This method is for handling OAuth2 user authentication
     public AuthenticationResponse authenticateOAuth2UserAndCreateToken(String email) {
-        logger.info("Authenticating user: {}", userService.getUserByEmail(email));
         User user = userService.getUserByEmail(email);
         if (user == null) {
             throw new UserNotFoundException("User not found");
         }
         String token = jwtTool.createToken(user);
-        logger.info("JWT token created for user: {}", email);
         return new AuthenticationResponse(token, user);
     }
 }

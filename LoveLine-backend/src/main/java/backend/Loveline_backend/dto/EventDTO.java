@@ -1,5 +1,7 @@
 package backend.Loveline_backend.dto;
 
+import backend.Loveline_backend.entity.Timeline;
+import backend.Loveline_backend.entity.User;
 import backend.Loveline_backend.enums.EventType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,4 +23,11 @@ public class EventDTO {
 
     @NotNull(message = "The event type cannot be null")
     private EventType type;
+
+    @NotBlank(message = "The timeline cannot be empty")
+    private Timeline timeline;
+
+    @NotBlank(message = "The user cannot be empty")
+    private User user;
+
 }
