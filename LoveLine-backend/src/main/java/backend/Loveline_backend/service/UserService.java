@@ -32,7 +32,7 @@ public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    @Autowired(required = false)
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -102,7 +102,7 @@ public class UserService {
             user.setSurname(userDTO.getSurname());
             user.setEmail(userDTO.getEmail());
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            user.setLoverId(generateUniqueLoverId()); // Set a unique 5-digit loverId
+            user.setLoverId(generateUniqueLoverId()); // setting a unique 5-digit loverId
 
             if (userDTO.getPfp() == null || userDTO.getPfp().isEmpty()) {
                 user.setPfp(getRandomDefaultProfilePictureUrl());
@@ -110,7 +110,7 @@ public class UserService {
                 user.setPfp(userDTO.getPfp());
             }
             userRepository.save(user);
-//            sendMailProfileCreated(user.getEmail(), user.getName(), user.getSurname());
+            sendMailProfileCreated(user.getEmail(), user.getName(), user.getSurname());
             return "User with ID: " + user.getId() + " created";
         }
     }
@@ -126,7 +126,7 @@ public class UserService {
 
         User user = userOptional.get();
 
-        // Check if the email is being updated and if it already exists for another user
+        // checking if the email is being updated and if it already exists for another user
         if (!user.getEmail().equals(userDTO.getEmail())) {
             Optional<User> existingUserWithEmail = userRepository.findByEmail(userDTO.getEmail());
             if (existingUserWithEmail.isPresent()) {
@@ -151,7 +151,6 @@ public class UserService {
             user.setPfp(userDTO.getPfp());
         }
 
-        // Save the updated user back to the repository
         userRepository.save(user);
 
         return "The user: " + user.getUsername() + " has been updated";
@@ -212,43 +211,59 @@ public class UserService {
 
 
     // SEND EMAIL "PROFILE CREATED" METHOD
-//    private void sendMailProfileCreated(String email, String name, String surname) {
-//        try {
-//            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-//            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-//
-//            helper.setTo(email);
-//            helper.setSubject(String.format("Loveline is happy to have you %s! \uD83E\uDEE3", name));
-//
-//            String htmlMsg = String.format(
-//                    "<html>" +
-//                            "<body style='text-align: center; font-family: Poppins, sans-serif;'>" +
-//                            "<img src='cid:welcomeImage' style='width: 100%%; height: auto; max-width: 900px; border-radius: 16px;'>" +
-//                            "<h1Dear %s %s,</h1>" +
-//                            "<h3>Your Loveline account has been successfully created! Congrats! 🎉<br>" +
-//                            "We can't wait to see you on our platform!</h3>" +
-//                            "<p>You can now access the system using the credentials you provided during registration.</p>" +
-//                            "<p></p>" +
-//                            "<p>Best regards,</p>" +
-//                            "<p>The Loveline Team</p>" +
-//                            "<img src='cid:logoImage' style='width: 200px; height: auto;'>" +
-//                            "<p style='font-size: 12px; margin-top: 20px;'>© 2024 LoveLine</p>" +
-//                            "<p style='font-size: 12px;'>Trieste, Italy</p>" +
-//                            "</body>" +
-//                            "</html>", name, surname);
-//
-//
-//            helper.setText(htmlMsg, true);
-//
-//            ClassPathResource imageResource = new ClassPathResource("static/images/welcome.jpg");
-//            helper.addInline("welcomeImage", imageResource);
-//
-//            ClassPathResource imageResource2 = new ClassPathResource("static/images/logo.png");
-//            helper.addInline("logoImage", imageResource2);
-//
-//            javaMailSender.send(mimeMessage);
-//        } catch (MessagingException e) {
-//            logger.error("Error sending email to {}", email, e);
-//        }
-//    }
+    public void sendMailProfileCreated(String email, String name, String surname) {
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            helper.setTo(email);
+            helper.setSubject(String.format("Loveline is happy to have you, %s \uD83D\uDC8C", name));
+
+            String htmlMsg = String.format(
+                    "<html>" +
+                            "<body style='font-family: Poppins, Helvetica, sans-serif;'>" +
+                            "<div style='max-width: 600px; margin: 0 auto;'>" +
+                            "<img src='cid:bannerGif' alt='Welcome Banner' style='width: 100%%; height: auto;'>" +
+                            "<h1>Dear %s %s,</h1>" +
+                            "<h2 style='margin-bottom: 0;'>Your Loveline account has been successfully created! \uD83D\uDC98 <br>We can't wait to see you on our platform! \uD83D\uDC40</h2>" +
+                            "<p>You can now access the website using the credentials you provided during registration. </p>" +
+                            "<br>" +
+                            "<p>Don't forget to update your info if needed! Have fun personalizing your own experience with LoveLine, especially with your partner! \uD83D\uDC65</p>" +
+                            "<br>" +
+                            "<br>" +
+
+                            "<div style='text-align: center; margin-top: 20px;'>" +
+                            "<p style='font-size: 18px; font-weight: bold;'>Invite your lover to join LoveLine and start creating memorable moments together! \uD83E\uDD70</p>" +
+                            "<p style='margin-bottom: 0;'>Click and share this link with them:</p>" +
+                            "<a href='http://localhost:4200/auth/register' target='_blank' " +
+                            "style='display: inline-block; text-align: center; font-family: Poppins, Helvetica, sans-serif; background-color: transparent; border: 2px solid black; padding: 10px 35px; border-radius: 20px; cursor: pointer; text-decoration: none; color: black; margin: 20px auto;'>" +
+                            "Join LoveLine now</a>" +
+                            "</div>" +
+
+                            "<br>" +
+                            "<br>" +
+                            "<p style='margin: 0;'>Best regards,</p>" +
+                            "<p style='margin: 0; margin-bottom: 20px; font-weight: bold;'>The Loveline Team</p>" +
+                            "<img src='cid:logoImage' alt='Loveline Logo' style='width: 150px; height: auto;'>" +
+                            "<p style='font-size: 12px; margin: 0; margin-top: 20px;'>© 2024 LoveLine</p>" +
+                            "<p style='font-size: 12px; margin: 0;'>Trieste, Italy</p>" +
+                            "</div>" +
+                            "</body>" +
+                            "</html>",
+                    name, surname
+            );
+
+            helper.setText(htmlMsg, true);
+
+            // Add inline images for the email
+            ClassPathResource logoResource = new ClassPathResource("static/logo.png");
+            helper.addInline("logoImage", logoResource);
+            ClassPathResource bannerResource = new ClassPathResource("static/banner.gif");
+            helper.addInline("bannerGif", bannerResource);
+
+            javaMailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            logger.error("Error sending email to {}: {}", email, e.getMessage());
+        }
+    }
 }

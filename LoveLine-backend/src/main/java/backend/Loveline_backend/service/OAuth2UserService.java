@@ -2,14 +2,19 @@ package backend.Loveline_backend.service;
 
 import backend.Loveline_backend.entity.User;
 import backend.Loveline_backend.repository.UserRepository;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -30,6 +35,9 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
 
     private Set<Integer> usedLoverIds = new HashSet<>();
@@ -62,7 +70,6 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
         User user = processOAuth2User(registrationId, modifiableAttributes, profilePictureUrl, accessToken);
 
-        // Determine the attribute key for username based on provider
         String userNameAttributeName;
         if ("github".equals(registrationId)) {
             userNameAttributeName = "login";
@@ -119,6 +126,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
         // Retrieve email safely
         String email = (String) attributes.get("email");
         if (email == null) {
+
             // Attempt to fetch email using an additional request to GitHub API
             email = fetchGitHubEmail(accessToken);
             logger.info("Email fetched from GitHub: {}", email);
@@ -165,6 +173,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
         // Save the user if it's new or has changes
         userRepository.save(user);
+        sendMailProfileCreated(user.getEmail(), user.getName(), user.getSurname());
         return user;
     }
 
@@ -173,7 +182,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
     private int generateUniqueLoverId() {
         int loverId;
         do {
-            loverId = ThreadLocalRandom.current().nextInt(10000, 100000); // Generate number between 10000 and 99999
+            loverId = ThreadLocalRandom.current().nextInt(10000, 100000);
         } while (usedLoverIds.contains(loverId));
         usedLoverIds.add(loverId);
         return loverId;
@@ -213,5 +222,62 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
         }
 
         return email;
+    }
+
+    // SEND EMAIL "PROFILE CREATED" METHOD
+    public void sendMailProfileCreated(String email, String name, String surname) {
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            helper.setTo(email);
+            helper.setSubject(String.format("Loveline is happy to have you, %s \uD83D\uDC8C", name));
+
+            String htmlMsg = String.format(
+                    "<html>" +
+                            "<body style='font-family: Poppins, Helvetica, sans-serif;'>" +
+                            "<div style='max-width: 600px; margin: 0 auto;'>" +
+                            "<img src='cid:bannerGif' alt='Welcome Banner' style='width: 100%%; height: auto;'>" +
+                            "<h1>Dear %s %s,</h1>" +
+                            "<h2 style='margin-bottom: 0;'>Your Loveline account has been successfully created! \uD83D\uDC98 <br>We can't wait to see you on our platform! \uD83D\uDC40</h2>" +
+                            "<p>You can now access the website using the credentials you provided during registration. </p>" +
+                            "<br>" +
+                            "<p>Don't forget to update your info if needed! Have fun personalizing your own experience with LoveLine, especially with your partner! \uD83D\uDC65</p>" +
+                            "<br>" +
+                            "<br>" +
+
+                            "<div style='text-align: center; margin-top: 20px;'>" +
+                            "<p style='font-size: 18px; font-weight: bold;'>Invite your lover to join LoveLine and start creating memorable moments together! \uD83E\uDD70</p>" +
+                            "<p style='margin-bottom: 0;'>Click and share this link with them:</p>" +
+                            "<a href='http://localhost:4200/auth/register' target='_blank' " +
+                            "style='display: inline-block; text-align: center; font-family: Poppins, Helvetica, sans-serif; background-color: transparent; border: 2px solid black; padding: 10px 35px; border-radius: 20px; cursor: pointer; text-decoration: none; color: black; margin: 20px auto;'>" +
+                            "Join LoveLine now</a>" +
+                            "</div>" +
+
+                            "<br>" +
+                            "<br>" +
+                            "<p style='margin: 0;'>Best regards,</p>" +
+                            "<p style='margin: 0; margin-bottom: 20px; font-weight: bold;'>The Loveline Team</p>" +
+                            "<img src='cid:logoImage' alt='Loveline Logo' style='width: 150px; height: auto;'>" +
+                            "<p style='font-size: 12px; margin: 0; margin-top: 20px;'>© 2024 LoveLine</p>" +
+                            "<p style='font-size: 12px; margin: 0;'>Trieste, Italy</p>" +
+                            "</div>" +
+                            "</body>" +
+                            "</html>",
+                    name, surname
+            );
+
+            helper.setText(htmlMsg, true);
+
+            // Add inline images for the email
+            ClassPathResource logoResource = new ClassPathResource("static/logo.png");
+            helper.addInline("logoImage", logoResource);
+            ClassPathResource bannerResource = new ClassPathResource("static/banner.gif");
+            helper.addInline("bannerGif", bannerResource);
+
+            javaMailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            logger.error("Error sending email to {}: {}", email, e.getMessage());
+        }
     }
 }

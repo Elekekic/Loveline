@@ -48,7 +48,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "timeline_id")
     private Timeline timeline;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Event> events;
 
 

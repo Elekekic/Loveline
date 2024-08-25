@@ -11,6 +11,7 @@ import backend.Loveline_backend.exception.TImelineNotFoundException;
 import backend.Loveline_backend.exception.UserNotFoundException;
 import backend.Loveline_backend.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -25,9 +26,11 @@ public class EventService {
     private EventRepository eventRepository;
 
     @Autowired
+    @Lazy
     private TimeLineService timeLineService;
 
     @Autowired
+    @Lazy
     private UserService userService;
 
 
