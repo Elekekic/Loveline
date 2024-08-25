@@ -61,7 +61,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
             profilePictureUrl = (String) attributes.get("avatar_url");
         }
         if (profilePictureUrl == null) {
-            profilePictureUrl = getRandomDefaultProfilePictureUrl(); // Use a random default picture URL
+            profilePictureUrl = getRandomDefaultProfilePictureUrl();
         }
 
         // Create a modifiable copy of the attributes map because if not, the Github access will give problems with the email
@@ -111,7 +111,8 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
     }
 
     private User processOAuth2User(String registrationId, Map<String, Object> attributes, String profilePictureUrl, String accessToken) {
-        // Retrieve providerId safely
+        
+        // Retrieve providerId
         String providerId = null;
         if (attributes.containsKey("sub")) {
             providerId = attributes.get("sub").toString();
@@ -123,7 +124,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
             throw new IllegalArgumentException("Provider ID not found in attributes");
         }
 
-        // Retrieve email safely
+        // Retrieve email 
         String email = (String) attributes.get("email");
         if (email == null) {
 
