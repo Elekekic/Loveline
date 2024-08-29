@@ -1,0 +1,232 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-style: border-box;
+  font-family: "Agrandir";
+  color: #ddd7d9;
+ /*  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="%23ddd7d9"/></svg>') 16 16, auto;
+ */
+}
+
+/* LOADER */
+.loader {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.container-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.img {
+  position: absolute;
+  background-color: transparent;
+}
+
+.container-img img {
+  width: 60px;
+  opacity: 1;
+  background-color: transparent;
+}
+
+.container-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Agrandir";
+  font-size: 2.2vw;
+  opacity: 0;
+}
+
+.counter {
+  font-weight: bold;
+  color: #5a1d2d;
+}
+
+/* LOADING BAR */
+.loading-bar {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 2px;
+  background-color: #ddd7d9;
+  border-radius: 5px;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.progress-bar {
+  width: 0;
+  height: 100%;
+  transition: width 0.4s ease;
+}
+
+/* FIRST SECTION */
+
+.first-sct {
+  height: 100%;
+  width: 100%;
+}
+
+.hero-sct {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mini-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  width: 270px;
+}
+
+.loveline-logo {
+  padding: 20px;
+}
+
+.loveline-logo img {
+  width: 200px;
+}
+
+/* TOGGLE FOR DARK/LIGHT MODE  */
+
+.theme-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border: 1px solid #ddd7d9;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.theme-button svg {
+  width: 18px;
+  height: 18px;
+  transition: opacity 0.3s ease;
+}
+
+body.dark-mode {
+  background-color: #ddd7d9;
+  color: #151318;
+}
+
+/* LOGIN BUTTON */
+.cta-login-button {
+  display: flex;
+  width: 150px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  margin-right: 20px;
+  background-color: #cf617a;
+  border-radius: 20px;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.cta-login-button a {
+  margin: 0;
+  font-family: 'Agrandir Regular';
+  height: 20px ;
+  font-size: 18px;
+  color: #ddd7d9;
+  background: transparent;
+  transition: all 0.5s ease;
+}
+
+/* HERO ITEMS */
+
+.hero-items {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+.side-menu {
+  font-family: 'Agrandir Regular';
+  padding: 0 2.2em;
+  display: flex; 
+  align-content: center;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+.side-menu a {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  text-decoration: none;
+  color: #ddd7d968;
+  padding: 15px 0;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.side-menu svg {
+  width: 16px; 
+  height: 16px;
+  margin-left: 8px;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.side-menu a:hover {
+  color: #ddd7d9;
+}
+
+.side-menu a:hover svg {
+  opacity: 1; /* Show on hover */
+  transform: scale(1); /* Scale to full size on hover */
+}
+
+.title-hero-sct h1 {
+  font-size: 9vw;
+  padding-left: 2rem;
+  background: linear-gradient(to right, #5a1d2d, #cf617a, #6196a8, #486f8ebc, #5a1d2d, #cf617a, #6196a8, #486f8ebc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 600%; 
+  animation: gradientLoop 20s linear infinite;
+}
+
+.title-hero-sct p {
+  font-family: 'Agrandir Regular';
+  padding-left: 2rem;
+  font-size: 1.5vw;
+}
+
+@keyframes gradientLoop {
+  0% {
+    background-position: 0% 0%; 
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
