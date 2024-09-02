@@ -15,6 +15,32 @@ export class LandingPageComponent {
     this.animateLoader();
     this.darkOrLightMode();
     this.iconsSideMenuAnimations();
+    this.interactive();
+  }
+
+  interactive() {
+    let curX: number = 0;
+    let curY: number = 0;
+    let tgX: number = 0;
+    let tgY: number = 0;
+  
+    document.addEventListener('DOMContentLoaded', () => {
+      const interactiveBubble: HTMLDivElement = document.querySelector('.interactive')!;
+      
+      function move() {
+        curX += (tgX - curX) / 20;
+        curY += (tgY - curY) / 20;
+        interactiveBubble.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
+        requestAnimationFrame(move);
+      }
+  
+      window.addEventListener('mousemove', (event) => {
+        tgX = event.clientX;
+        tgY = event.clientY;
+      });
+  
+      move();
+    });
   }
 
   iconsSideMenuAnimations(): void {
@@ -42,7 +68,7 @@ export class LandingPageComponent {
   }
 
   animateLoader(): void {
-    const loader = gsap.timeline({ onComplete: this.showContent });
+    const loader = gsap.timeline({ onComplete: () => this.showContent() });
 
     loader
       .from('.img-left', {
@@ -103,6 +129,19 @@ export class LandingPageComponent {
   showContent(): void {
     gsap.to('.loader', { duration: 0.4, opacity: 0, display: 'none' });
     gsap.to('body, html', { overflow: 'auto' });
+
+    this.animateTitle();
+  }
+
+  animateTitle(): void {
+    const title = document.querySelectorAll('.word');
+    gsap.from(title, {
+      y: '100%',
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.3,
+      ease: 'power2.out'
+    });
   }
 
   darkOrLightMode(): void {

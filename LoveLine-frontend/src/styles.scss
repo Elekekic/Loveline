@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-* {
+body,html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #151318;
+    background-color: var(--color-bg);
   }
 
   @font-face {
@@ -14,4 +14,29 @@
   @font-face {
     font-family: 'Agrandir Regular';
     src: url('assets/fonts/Agrandir-Regular.otf') format('truetype');
+  }
+
+  *,
+*::after,
+*::before {
+  box-sizing: border-box;
+  /* SETTINGS TO NOT MAKE THE SCROLLBAR VISIBLE */
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; //* For Internet Explorer and Edge */
+}
+
+/* SETTINGS TO NOT MAKE THE SCROLLBAR VISIBLE */
+*::-webkit-scrollbar {
+  /*  display: none; */ /* For Chrome, Safari, and Opera */
+}
+
+  :root {
+    --color-bg: rgb(21, 19, 24);
+    --color1: 90, 29, 45;
+    --color2: 207, 97, 122;
+    --color3: 97, 150, 168;
+    --color4: 72, 111, 142;
+    --color-interactive: 140, 100, 225;
+    --circle-size: 80vw;
+    --blending: hard-light;
   }
