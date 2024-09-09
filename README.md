@@ -93,3 +93,10 @@ Currently it's all okay. Since i'm now in the front-end side, i'll figure out th
 
 Currently, i still need to try the oauth2 on the front-end side since i've seen it works in the back (Resolving)
 
+
+<br>
+
+[Back to top](#table-of-contents)
+
+[^1]: GreenSock Animation Platform. A JavaScript library for creating high-performance animations.
+[^2]: I used it mostly to have a little bit of front when i was doing the backend for the authorization system.
