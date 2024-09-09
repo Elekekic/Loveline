@@ -1,50 +1,106 @@
 import { Component } from '@angular/core';
 import { gsap } from 'gsap';
-
+import { Observer } from 'gsap/Observer';
+declare const SplitType: any;
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.scss'],
 })
 export class LandingPageComponent {
-  private progressColors = ['#5a1d2d', '#cf617a', '#5694a7', '#457192'];
-
-  constructor() {}
+ 
 
   ngOnInit(): void {
-    this.animateLoader();
-    this.darkOrLightMode();
-    this.iconsSideMenuAnimations();
-    this.interactive();
+    this.landingPage();
+    this.iconsMenuAnimations();
   }
 
-  interactive() {
-    let curX: number = 0;
-    let curY: number = 0;
-    let tgX: number = 0;
-    let tgY: number = 0;
-  
-    document.addEventListener('DOMContentLoaded', () => {
-      const interactiveBubble: HTMLDivElement = document.querySelector('.interactive')!;
-      
-      function move() {
-        curX += (tgX - curX) / 20;
-        curY += (tgY - curY) / 20;
-        interactiveBubble.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
-        requestAnimationFrame(move);
+  landingPage() {
+    gsap.registerPlugin(Observer);
+
+    let sections = document.querySelectorAll('section'),
+      images = document.querySelectorAll('.bg'),
+      outerWrappers = gsap.utils.toArray('.outer'),
+      innerWrappers = gsap.utils.toArray('.inner'),
+      currentIndex = -1,
+      wrap = gsap.utils.wrap(0, sections.length),
+      animating: boolean;
+
+    let typeSplits = Array.from(sections).map((section) =>
+      new SplitType(section, {
+        types: 'lines, words, chars',
+        tagName: 'div',
+      })
+    );
+
+    gsap.set(outerWrappers, { yPercent: 100 });
+    gsap.set(innerWrappers, { yPercent: -100 });
+
+    function gotoSection(index: number, direction: number) {
+      index = wrap(index); // this is to make sure it's valid
+      animating = true;
+      let fromTop = direction === -1,
+        dFactor = fromTop ? -1 : 1,
+        tl = gsap.timeline({
+          defaults: { duration: 1.25, ease: 'power1.inOut' },
+          onComplete: () => {
+            animating = false;
+          },
+        });
+      if (currentIndex >= 0) {
+        gsap.set(sections[currentIndex], { zIndex: 0 });
+        tl.to(images[currentIndex], { yPercent: -15 * dFactor }).set(
+          sections[currentIndex],
+          { autoAlpha: 0 }
+        );
       }
-  
-      window.addEventListener('mousemove', (event) => {
-        tgX = event.clientX;
-        tgY = event.clientY;
-      });
-  
-      move();
+      gsap.set(sections[index], { autoAlpha: 1, zIndex: 1 });
+      tl.fromTo(
+        [outerWrappers[index], innerWrappers[index]],
+        {
+          yPercent: (i) => (i ? -100 * dFactor : 100 * dFactor),
+        },
+        {
+          yPercent: 0,
+        },
+        0
+      )
+        .fromTo(images[index], { yPercent: 15 * dFactor }, { yPercent: 0 }, 0)
+        .fromTo(
+          typeSplits[index].words,
+          {
+            autoAlpha: 0,
+            yPercent: 150 * dFactor,
+          },
+          {
+            autoAlpha: 1,
+            yPercent: 0,
+            duration: 1,
+            ease: 'power2',
+            stagger: {
+              each: 0.02,
+              from: 'random',
+            },
+          },
+          0.2
+        );
+      currentIndex = index;
+    }
+
+    Observer.create({
+      type: 'wheel,touch,pointer',
+      wheelSpeed: -1,
+      onDown: () => !animating && gotoSection(currentIndex - 1, -1),
+      onUp: () => !animating && gotoSection(currentIndex + 1, 1),
+      tolerance: 10,
+      preventDefault: true,
     });
+
+    gotoSection(0, 1);
   }
 
-  iconsSideMenuAnimations(): void {
-    document.querySelectorAll('.side-menu a').forEach(function (link) {
+  iconsMenuAnimations(): void {
+    document.querySelectorAll('a').forEach(function (link) {
       const svg = link.querySelector('svg');
 
       link.addEventListener('mouseenter', function () {
@@ -65,106 +121,5 @@ export class LandingPageComponent {
         });
       });
     });
-  }
-
-  animateLoader(): void {
-    const loader = gsap.timeline({ onComplete: () => this.showContent() });
-
-    loader
-      .from('.img-left', {
-        duration: 1.5,
-        opacity: 0,
-        x: '-150%',
-        ease: 'power4.out',
-      })
-      .from(
-        '.img-right',
-        { duration: 1.5, opacity: 0, x: '150%', ease: 'power4.out' },
-        '-=1.5'
-      )
-      .to('.img-left', { duration: 0.5, rotation: -18, x: '-30%' })
-      .to('.img-right', { duration: 0.5, rotation: 18, x: '30%' }, '-=0.5')
-      .to('.container-text', { duration: 0.2, opacity: 1 })
-      .to('.loading-bar', { duration: 0.2, opacity: 1 })
-      .to('.counter', {
-        innerHTML: 100,
-        duration: 1,
-        ease: 'none',
-        snap: { innerHTML: 1 },
-        onUpdate: () => {
-          const counter = document.querySelector('.counter');
-          const progressBar: HTMLElement | null =
-            document.querySelector('.progress-bar');
-
-          if (counter && progressBar) {
-            const progressValue = Math.round(parseInt(counter.innerHTML));
-            counter.innerHTML = progressValue.toString();
-            progressBar.style.width = `${progressValue}%`;
-
-            this.updateProgressBarColor(progressValue);
-          }
-        },
-      });
-  }
-
-  updateProgressBarColor(progressValue: number): void {
-    const colorIndex = Math.floor(
-      progressValue / (100 / this.progressColors.length)
-    );
-    const color = this.progressColors[colorIndex];
-
-    gsap.to('.progress-bar', {
-      backgroundColor: color,
-      duration: 0.2,
-      ease: 'none',
-    });
-
-    gsap.to('.counter', {
-      color: color,
-      duration: 0.2,
-      ease: 'none',
-    });
-  }
-
-  showContent(): void {
-    gsap.to('.loader', { duration: 0.4, opacity: 0, display: 'none' });
-    gsap.to('body, html', { overflow: 'auto' });
-
-    this.animateTitle();
-  }
-
-  animateTitle(): void {
-    const title = document.querySelectorAll('.word');
-    gsap.from(title, {
-      y: '100%',
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.3,
-      ease: 'power2.out'
-    });
-  }
-
-  darkOrLightMode(): void {
-    const themeToggleButton = document.getElementById(
-      'theme-button'
-    ) as HTMLElement | null;
-    const iconMoon = document.getElementById('icon-moon') as SVGElement | null;
-    const iconSun = document.getElementById('icon-sun') as SVGElement | null;
-
-    if (themeToggleButton && iconMoon && iconSun) {
-      themeToggleButton.addEventListener('click', () => {
-        const body = document.body;
-
-        body.classList.toggle('dark-mode');
-
-        if (body.classList.contains('dark-mode')) {
-          iconMoon.style.display = 'none';
-          iconSun.style.display = 'block';
-        } else {
-          iconMoon.style.display = 'block';
-          iconSun.style.display = 'none';
-        }
-      });
-    }
   }
 }
