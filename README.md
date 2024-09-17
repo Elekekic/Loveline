@@ -32,7 +32,7 @@
 > [!IMPORTANT]
 > The dependency for the websocket has been implemented in the back-end, but hasn't been used yet
 
-_**Front-end**_: `Angular`, `GSAP`[^1], `Bootstrap`, `Typescript` 
+_**Front-end**_: `Angular`, `GSAP`[^1], `Typescript` 
 <!-- - Front deploy : `Vercel` -->
 
 _**Back-end**_: `Java`, `SpringBoot`, `PostGreSQL`, `JWT`, `Cloudinary`, `Email sender`, `Lombok`, `Spring Security`, `OAuth2`, `Spring Web`, `Thymeleaf`[^2], `JPA`, `Validation`  
