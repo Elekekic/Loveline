@@ -1,0 +1,151 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    color: #dcd6d8;
+    background: #151318;
+    font-family: "Agrandir";
+    text-transform: uppercase;
+}
+
+h1 {
+    font-family: "Agrandir";
+    font-size: clamp(1rem, 9vw, 6rem);
+    font-weight: bold;
+    text-align: left;
+    color: #dcd6d8;
+    width: 90vw;
+    margin: 0;
+}
+
+h3 {
+    font-family: "Agrandir";
+    margin-top: 4vw;
+    margin-right: -0.5em;
+    color: var(--text-color);
+    width: 90vw;
+
+    svg {
+        opacity: 1;
+        width: 20px;
+        height: 20px;
+        transform: none;
+        transition: none;
+        color: var(--text-color);
+    }
+}
+
+
+
+a {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    text-decoration: none;
+    color: #ddd7d968;
+    padding: 15px 0;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+svg {
+    width: 16px;
+    height: 16px;
+    opacity: 0;
+    margin-left: 8px;
+    transform: scale(0.5);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+a:hover {
+    cursor: pointer;
+    color: #ddd7d9;
+}
+
+p {
+    color: #ddd7d9;
+    font-size: 26px;
+    font-family: "Agrandir Regular";
+}
+
+.loveline-logo img {
+    width: 140px;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3%;
+    width: 100%;
+    z-index: 3;
+    height: 7em;
+    font-family: "Agrandir";
+    font-size: clamp(0.66rem, 2vw, 1rem);
+    letter-spacing: 0.2em;
+}
+
+.menu {
+    display: flex;
+    align-content: center;
+    justify-content: space-around;
+}
+
+.menu a {
+    padding: 0 0 0 3rem;
+}
+
+section {
+    width: 100%;
+    margin-left: 1rem;
+
+    a {
+        font-family: "Agrandir";
+        letter-spacing: 0.2rem;
+        text-align: left;
+        width: fit-content;
+    }
+}
+
+.tag {
+    background-color: var(--light-blue);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: fit-content;
+    margin-top: 20px;
+    margin-left: 1rem;
+    padding: 5px 20px;
+    border-radius: 20px;
+
+    svg {
+        opacity: 1;
+        width: 20px;
+        height: 20px;
+        transform: none;
+        transition: none;
+        color: var(--text-color);
+    }
+
+    p {
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+
+    }
+}
+
+
+.timeline-sct p {
+
+    font-size: 18px;
+    margin: 0;
+    padding-left: 2.2rem;
+
+}
+
+

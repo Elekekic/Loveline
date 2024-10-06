@@ -9,16 +9,11 @@ $bg-gradient: linear-gradient(
   user-select: none;
 }
 
-a {
-  color: #dcd6d8;
-  text-decoration: none;
-}
-
 body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  color: #dcd6d8;
+  color: var(--text-color);
   background: #151318;
   font-family: "Agrandir";
   text-transform: uppercase;
@@ -30,7 +25,7 @@ h1 {
   font-weight: bold;
   text-align: center;
   letter-spacing: 0.5em;
-  color: #dcd6d8;
+  color: var(--text-color);
   width: 90vw;
   max-width: 1200px;
 }
@@ -42,7 +37,7 @@ h2 {
   margin-top: 4vw;
   text-align: center;
   margin-right: -0.5em;
-  color: #ddd7d9;
+  color: var(--text-color);
   width: 90vw;
   max-width: 1200px;
 }
@@ -52,7 +47,7 @@ a {
   align-items: center;
   justify-content: right;
   text-decoration: none;
-  color: #ddd7d968;
+  color: var(--link-color);
   padding: 15px 0;
   font-size: 16px;
   transition: color 0.3s ease;
@@ -69,11 +64,11 @@ svg {
 
 a:hover {
   cursor: pointer;
-  color: #ddd7d9;
+  color: var(--text-color);
 }
 
 p {
-  color: #ddd7d9;
+  color: var(--text-color);
   font-size: 26px;
   font-family: "Agrandir Regular";
 }
@@ -83,6 +78,7 @@ p {
 }
 
 header {
+  top: 0;
   position: fixed;
   display: flex;
   align-items: center;
@@ -162,7 +158,7 @@ section {
         justify-content: space-between;
         width: 100%;
         height: 100%;
-        background-color: #151318;
+        background-color: var(--color-bg);
 
         h1 {
             font-size: clamp(1rem, 9vw, 7rem);
