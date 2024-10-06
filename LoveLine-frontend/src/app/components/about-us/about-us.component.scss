@@ -5,16 +5,16 @@
 body {
     margin: 0;
     padding: 0;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     color: #dcd6d8;
-    background: #151318;
     font-family: "Agrandir";
-    text-transform: uppercase;
 }
 
 h1 {
     font-family: "Agrandir";
     font-size: clamp(1rem, 9vw, 6rem);
+    word-break: break-word;
     font-weight: bold;
     text-align: left;
     color: #dcd6d8;
@@ -101,7 +101,6 @@ header {
 
 section {
     width: 100%;
-    margin-left: 1rem;
 
     a {
         font-family: "Agrandir";
@@ -112,13 +111,12 @@ section {
 }
 
 .tag {
-    background-color: var(--light-blue);
+    background: linear-gradient( to right, var(--light-blue), var(--light-pink) );
     display: flex;
     align-items: center;
     justify-content: space-around;
     width: fit-content;
     margin-top: 20px;
-    margin-left: 1rem;
     padding: 5px 20px;
     border-radius: 20px;
 
@@ -139,13 +137,27 @@ section {
     }
 }
 
-
 .timeline-sct p {
-
     font-size: 18px;
     margin: 0;
     padding-left: 2.2rem;
-
 }
 
+.hero-sct {
+    display: flex;
+    padding-top: 3rem;
+    padding-left: 3rem;
 
+
+    h1 {
+        font-size: 6vw;
+    }
+}
+
+.first-half {
+    width: 50%;
+}
+
+.second-half {
+    width: 50%;
+}

@@ -9,16 +9,6 @@ $bg-gradient: linear-gradient(
   user-select: none;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  color: var(--text-color);
-  background: #151318;
-  font-family: "Agrandir";
-  text-transform: uppercase;
-}
-
 h1 {
   font-family: "Agrandir";
   font-size: clamp(1rem, 9vw, 6rem);
