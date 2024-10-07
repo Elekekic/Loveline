@@ -12,7 +12,9 @@ export class AboutUsComponent {
   
   ngOnInit(): void {
     this.iconsMenuAnimations();
+
   }
+
 
   
   iconsMenuAnimations(): void {

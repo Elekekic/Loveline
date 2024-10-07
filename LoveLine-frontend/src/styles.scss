@@ -7,13 +7,13 @@ body,html {
   }
 
   @font-face {
-    font-family: 'Agrandir';
-    src: url('assets/fonts/Agrandir-WideLight.otf') format('truetype');
+    font-family: 'Arimo';
+    src: url('assets/fonts/Arimo-VariableFont_wght.ttf') format('truetype');
   } 
 
   @font-face {
-    font-family: 'Agrandir Regular';
-    src: url('assets/fonts/Agrandir-Regular.otf') format('truetype');
+    font-family: 'Garet';
+    src: url('assets/fonts/Garet-Book.ttf') format('truetype');
   }
 
   *,
@@ -31,7 +31,7 @@ body,html {
 }
 
   :root {
-    --color-bg: #030303;
+    --color-bg: #151515;
     --text-color: #ddd7d9; 
     --link-color: #ddd7d968;
     --light-blue: #6196a8;

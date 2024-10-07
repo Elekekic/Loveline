@@ -2,28 +2,30 @@
     box-sizing: border-box;
 }
 
-body {
+body,
+html {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100%;
     color: #dcd6d8;
-    font-family: "Agrandir";
+    font-family: "Arimo";
+    overflow-y: auto;
+    scroll-behavior: smooth;
 }
 
 h1 {
-    font-family: "Agrandir";
+    font-family: "Arimo";
     font-size: clamp(1rem, 9vw, 6rem);
     word-break: break-word;
     font-weight: bold;
     text-align: left;
     color: #dcd6d8;
-    width: 90vw;
+    width: fit-content;
     margin: 0;
 }
 
 h3 {
-    font-family: "Agrandir";
+    font-family: "Arimo";
     margin-top: 4vw;
     margin-right: -0.5em;
     color: var(--text-color);
@@ -39,14 +41,13 @@ h3 {
     }
 }
 
-
-
 a {
+    font-family: "Garet";
     display: flex;
     align-items: center;
     justify-content: right;
     text-decoration: none;
-    color: #ddd7d968;
+    color: var(--link-color);
     padding: 15px 0;
     font-size: 16px;
     transition: color 0.3s ease;
@@ -69,7 +70,7 @@ a:hover {
 p {
     color: #ddd7d9;
     font-size: 26px;
-    font-family: "Agrandir Regular";
+    font-family: "Garet";
 }
 
 .loveline-logo img {
@@ -84,9 +85,8 @@ header {
     width: 100%;
     z-index: 3;
     height: 7em;
-    font-family: "Agrandir";
+    font-family: "Arimo";
     font-size: clamp(0.66rem, 2vw, 1rem);
-    letter-spacing: 0.2em;
 }
 
 .menu {
@@ -101,24 +101,32 @@ header {
 
 section {
     width: 100%;
+    overflow-y: auto;
 
     a {
-        font-family: "Agrandir";
-        letter-spacing: 0.2rem;
+        font-family: "Arimo";
         text-align: left;
+        font-size: 18px;
         width: fit-content;
+    }
+
+    p {
+        font-size: 20px;
     }
 }
 
 .tag {
-    background: linear-gradient( to right, var(--light-blue), var(--light-pink) );
+    background: linear-gradient(to right, var(--dark-blue), var(--light-blue), var(--light-pink), var(--dark-pink));
     display: flex;
     align-items: center;
     justify-content: space-around;
     width: fit-content;
     margin-top: 20px;
-    padding: 5px 20px;
+    padding: 7px 20px;
     border-radius: 20px;
+    cursor: default; 
+    box-shadow: 20px 20px 60px #0e0e0e,
+        -20px -20px 60px #141414;
 
     svg {
         opacity: 1;
@@ -160,4 +168,21 @@ section {
 
 .second-half {
     width: 50%;
+    position: relative;
+}
+
+.second-half img {
+    position: absolute;
+}
+
+.second-half img:nth-child(1) {
+    rotate: -15deg;
+    top: 5em;
+    left: 7em;
+}
+
+.second-half img:nth-child(2) {
+    rotate: 15deg;
+    top: 5em;
+    right: 7em;
 }
