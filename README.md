@@ -1,6 +1,7 @@
 <div align="center">
 
-![logo](https://github.com/user-attachments/assets/99365ad5-6b1e-446c-8d0b-cdcd4d534139)
+<img src="https://github.com/user-attachments/assets/f2d5d003-6b56-40ca-8edf-10f416cad90a" height="300px">
+
 
 <br>
 
@@ -80,8 +81,7 @@ In Loveline, you can make your own account and have a random "loverID" which is 
 
 <h1 id="videos">📂 Videos</h1>
 
-[Landing page video](https://github.com/user-attachments/assets/2de80db0-7001-4ffd-ac80-bff9170418c7)
-
+[Landing page video](https://github.com/user-attachments/assets/71d2d963-8e03-44a0-a1ac-f4af5564aed7)
 
 
 <h1 id="improvements">💡 Improvements</h1>
