@@ -30,10 +30,20 @@
     <div class="outer">
         <div class="inner">
             <div class="bg one">
+
+                <div class="tag">
+                    <p>Capture and celebrate your love story every step of the way </p> <svg
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                    </svg>
+                </div>
+
                 <h1 class="section-heading word">TRACK YOUR LOVE <br> STORY WITH LOVELINE</h1>
                 <p>Create a timeline of your love story and add special moments to it.</p>
-                <a>Sign up <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
+                <a style="margin-left: 4px;" [routerLink]="['/signup']">Sign up <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
                 </a>
@@ -45,13 +55,68 @@
     <div class="outer">
         <div class="inner">
             <div class="bg">
-                <h2 class="section-heading word">Celebrate Your <br> Unforgettable Milestones</h2>
+
+
+                <h2 class="section-heading word">Effortlessly Add Any <br> Upcoming Event</h2>
                 <p>With Loveline, you can include the significant milestones of your love story.</p>
-                <a [routerLink]="['/about-us']">More <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                </a>
+
+                <div class="radio-button-container">
+                    <div class="radio-button">
+                        <input type="radio" class="radio-button__input" id="radio1" name="radio-group">
+                        <label class="radio-button__label" for="radio1">
+                            <span class="radio-button__custom"></span>
+                            Date
+                        </label>
+                    </div>
+                    <div class="radio-button">
+                        <input type="radio" class="radio-button__input" id="radio2" name="radio-group" checked>
+                        <label class="radio-button__label" for="radio2">
+                            <span class="radio-button__custom"></span>
+
+                            Anniversary
+                        </label>
+                    </div>
+                    <div class="radio-button">
+                        <input type="radio" class="radio-button__input" id="radio3" name="radio-group">
+                        <label class="radio-button__label" for="radio3">
+                            <span class="radio-button__custom"></span>
+
+                            Incident
+                        </label>
+                    </div>
+                    <div class="radio-button">
+                        <input type="radio" class="radio-button__input" id="radio4" name="radio-group">
+                        <label class="radio-button__label" for="radio4">
+                            <span class="radio-button__custom"></span>
+
+                            Memory
+                        </label>
+                    </div>
+                    <div class="radio-button">
+                        <input type="radio" class="radio-button__input" id="radio5" name="radio-group">
+                        <label class="radio-button__label" for="radio5">
+                            <span class="radio-button__custom"></span>
+
+                            Highlight
+                        </label>
+                    </div>
+                    <div class="radio-button">
+                        <input type="radio" class="radio-button__input" id="radio6" name="radio-group">
+                        <label class="radio-button__label" for="radio6">
+                            <span class="radio-button__custom"></span>
+
+                            Reminder
+                        </label>
+                    </div>
+                    <div class="radio-button">
+                        <input type="radio" class="radio-button__input" id="radio7" name="radio-group">
+                        <label class="radio-button__label" for="radio7">
+                            <span class="radio-button__custom"></span>
+
+                            Milestone
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -60,13 +125,27 @@
     <div class="outer">
         <div class="inner">
             <div class="bg">
-                <h2 class="section-heading word">Preserve Your Precious Moments with Loveline</h2>
-                <p> Share your timeline with your partner and relive your favorite memories together.</p>
-                <a [routerLink]="['/about-us']" routerLinkActive="router-link-active">More <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+
+                <div class="tag">
+                    <p>Start your new adventure with your lover </p> <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
                     </svg>
-                </a>
+                </div>
+
+                <h2 class="section-heading word">Preserve Your Precious <br> Moments with Loveline</h2>
+                <p> Share your timeline with your lover and relive your favorite memories together.</p>
+
+                <div class="users">
+                    <div class="profile-images">
+                        <img src="../../../assets/img/person 3.jpg" alt="user pfp 1" class="profile-img">
+                        <img src="../../../assets/img/person 2.jpg" alt="user pfp 2" class="profile-img">
+                        <img src="../../../assets/img/person 4.jpg" alt="user pfp 3" class="profile-img">
+                    </div>
+                    <p class="text">More than 20k people joined Loveline and have <br> shared their timeline with their
+                        lover</p>
+                </div>
             </div>
         </div>
     </div>
@@ -75,13 +154,21 @@
     <div class="outer">
         <div class="inner">
             <div class="bg">
-                <h2 class="section-heading word">Variety of Fun Quizzes and Games Together</h2>
-                <p>Discover a collection of entertaining quizzes and games designed for couples to enjoy together.</p>
-                <a [routerLink]="['/about-us']">More <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                </a>
+                <h2 class="section-heading word">Variety of Fun Quizzes <br> and Games Together</h2>
+                <p>Let’s start with the first question! Are you ready to start?</p>
+
+                <div class="answers">
+                    <a [routerLink]="['/about-us']">Not yet, tell me more <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                      </svg>                      
+                    </a>
+
+                    <a [routerLink]="['/signup']">Yes! Let's get started! <svg xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                        </svg>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

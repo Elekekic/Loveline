@@ -1,6 +1,6 @@
 $bg-gradient: linear-gradient(180deg,
     rgba(0, 0, 0, 0.6) 0%,
-    rgba(0, 0, 0, 0.3) 100%);
+    rgba(0, 0, 0, 0.3) 30%);
 
 * {
   box-sizing: border-box;
@@ -8,34 +8,45 @@ $bg-gradient: linear-gradient(180deg,
 
 h1 {
   font-family: "Arimo";
-  font-size: clamp(1rem, 9vw, 6rem);
+  font-size: clamp(1rem, 9vw, 7rem);
   font-weight: bold;
   text-align: center;
-  letter-spacing: 0.3rem;
+  margin: 0;
   color: var(--text-color);
 }
 
 h2 {
   font-family: "Arimo";
-  font-size: clamp(1rem, 7vw, 6rem);
+  font-size: clamp(1rem, 7vw, 7rem);
   font-weight: bold;
   margin-top: 4vw;
-  letter-spacing: 0.3rem;
   text-align: center;
+  margin: 0;
   margin-right: -0.5em;
   color: var(--text-color);
 }
 
 a {
-  font-family: "Garet";
   display: flex;
   align-items: center;
   justify-content: right;
+  font-family: "Garet";
   text-decoration: none;
+  margin: 0 8px;
   color: var(--link-color);
   padding: 15px 0;
   font-size: 16px;
   transition: color 0.3s ease;
+}
+
+
+span.word, span.char {
+  white-space: pre;
+  display: inline-block;
+}
+
+a span.word {
+  margin-right: 0.2em !important;
 }
 
 svg {
@@ -54,8 +65,9 @@ a:hover {
 
 p {
   color: var(--text-color);
-  font-size: 26px;
+  font-size: 20px;
   font-family: "Garet";
+  margin: 5px 0;
 }
 
 .loveline-logo img {
@@ -123,7 +135,9 @@ section {
     a {
       font-family: "Garet";
       display: flex !important;
-      font-size: 18px;
+      font-size: 20px;
+
+      margin-top: 20px;
 
       align-items: center;
       justify-content: space-between;
@@ -170,34 +184,147 @@ section {
 
 .first {
   .bg {
-    background-image: $bg-gradient, url("../../../assets/img/try.jpg");
+    background-image:$bg-gradient, url("../../../assets/img/try.jpg");
+    backdrop-filter: blur(20px);
   }
 }
 
 .second {
   .bg {
-    background-image: $bg-gradient, url("../../../assets/img/try9.png");
+    background-image:$bg-gradient, url("../../../assets/img/try9.png");
+    backdrop-filter: blur(20px);
   }
 }
 
 .third {
   .bg {
-    background-image: $bg-gradient, url("../../../assets/img/try6.png");
+    background-image:$bg-gradient, url("../../../assets/img/try6.png");
+    backdrop-filter: blur(20px);
   }
 }
 
 .fourth {
   .bg {
-    background-image: $bg-gradient, url("../../../assets/img/try11.jpg");
+    background-image:$bg-gradient, url("../../../assets/img/try11.jpg");
+    backdrop-filter: blur(20px);
   }
 }
 
 .fifth {
   .bg {
-    background-image: $bg-gradient, url("../../../assets/img/try2.jpg");
+    background-image:$bg-gradient, url("../../../assets/img/try2.jpg");
+    backdrop-filter: blur(20px);
   }
 }
 
 h2 * {
   will-change: transform;
+}
+
+.tag {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(90px);
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin-top: 80px;
+  margin-bottom: 20px;
+
+  p {
+    margin: 0;
+    font-size: 16px !important;
+  }
+
+  svg {
+    color: var(--text-color);
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+    transition: none;
+    transform: none;
+    visibility: visible;
+  }
+}
+
+
+.radio-button-container {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.radio-button {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.radio-button__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radio-button__label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 0 3px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: "Garet", sans-serif;
+  color: var(--text-color);
+  text-transform: uppercase;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(90px);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.radio-button__label:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.radio-button__input:checked+.radio-button__label {
+  background-color: white;
+  color: black;
+}
+
+.users {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  padding: 10px;
+  margin-top: 30px;
+  border-radius: 20px;
+}
+
+.profile-images {
+  display: flex;
+  margin-right: 10px;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: -20px;
+}
+
+.text {
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+.answers {
+  display: flex !important;
+  justify-content: space-between;
+} 
+
+.answers a {
+  margin: 0 30px;
 }

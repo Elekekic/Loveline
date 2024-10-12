@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
-declare const SplitType: any;
+declare const SplitType: any; // since the splitype on GSAP is premium this is an alternative
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
@@ -9,8 +9,10 @@ declare const SplitType: any;
 })
 export class LandingPageComponent {
  
+  constructor(private renderer: Renderer2, private el: ElementRef) {}
 
   ngOnInit(): void {
+
     this.landingPage();
     this.iconsMenuAnimations();
   }
@@ -29,9 +31,21 @@ export class LandingPageComponent {
     let typeSplits = Array.from(sections).map((section) =>
       new SplitType(section, {
         types: 'lines, words, chars',
-        tagName: 'div',
+        tagName: 'span',
+        preserveWhitespace: true,
       })
     );
+
+    // I needed to make this quick set timeout for the links, because it was not keeping the spaces
+  setTimeout(() => {
+    const wordSpans = this.el.nativeElement.querySelectorAll('span.word');
+    console.log('Word spans after SplitType:', wordSpans);
+
+    wordSpans.forEach((span: HTMLElement) => {
+      console.log('Applying margin to:', span);
+      this.renderer.setStyle(span, 'margin-right', '0.2em');
+    });
+  }, 100); // Small delay
 
     gsap.set(outerWrappers, { yPercent: 100 });
     gsap.set(innerWrappers, { yPercent: -100 });
@@ -100,10 +114,10 @@ export class LandingPageComponent {
   }
 
   iconsMenuAnimations(): void {
-    document.querySelectorAll('a').forEach(function (link) {
-      const svg = link.querySelector('svg');
+    document.querySelectorAll('a').forEach(function (icon) {
+      const svg = icon.querySelector('svg');
 
-      link.addEventListener('mouseenter', function () {
+      icon.addEventListener('mouseenter', function () {
         gsap.to(svg, {
           duration: 0.1,
           opacity: 1,
@@ -112,7 +126,7 @@ export class LandingPageComponent {
         });
       });
 
-      link.addEventListener('mouseleave', function () {
+      icon.addEventListener('mouseleave', function () {
         gsap.to(svg, {
           duration: 0.1,
           opacity: 0,
