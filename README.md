@@ -81,7 +81,7 @@ In Loveline, you can make your own account and have a random "loverID" which is 
 
 <h1 id="videos">📂 Videos</h1>
 
-[Landing page video](https://github.com/user-attachments/assets/71d2d963-8e03-44a0-a1ac-f4af5564aed7)
+[Landing page video](https://github.com/user-attachments/assets/5c379280-5c31-44b4-8c3b-1d708ce9a04d)
 
 
 <h1 id="improvements">💡 Improvements</h1>
