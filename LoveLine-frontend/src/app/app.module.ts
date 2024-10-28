@@ -14,7 +14,6 @@ import { QuizzesComponent } from './components/quizzes/quizzes.component';
 import { SearchComponent } from './components/search/search.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
-import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 
@@ -30,10 +29,6 @@ const routes: Route[] = [
   {
     path: 'about-us',
     component: AboutUsComponent,
-  },
-  {
-    path: 'how-it-works',
-    component: HowItWorksComponent,
   },
   {
     path: 'login',
@@ -71,7 +66,6 @@ const routes: Route[] = [
     TimelineComponent,
     LoginComponent,
     SignupComponent,
-    HowItWorksComponent
   ],
   imports: [
     BrowserModule,
