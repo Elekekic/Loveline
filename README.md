@@ -78,10 +78,11 @@ In Loveline, you can make your own account and have a random "loverID" which is 
 > Since this project is still in building, i will edit this part later on! :)
 
 
-
 <h1 id="videos">📂 Videos</h1>
 
 [Landing page video](https://github.com/user-attachments/assets/5c379280-5c31-44b4-8c3b-1d708ce9a04d)
+
+[About us page video](https://github.com/user-attachments/assets/3321a188-3742-478b-afbf-cd76b62cc238)
 
 
 <h1 id="improvements">💡 Improvements</h1>
