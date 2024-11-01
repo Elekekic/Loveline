@@ -79,7 +79,7 @@ public class AuthController {
     // LOGIN MANUALLY METHOD
     @PostMapping("/login_form")
     public ResponseEntity<AuthenticationResponse> login(@ModelAttribute @Validated UserLoginDTO userLoginDTO, BindingResult bindingResult, Model model, HttpServletResponse response) {
-        System.out.println("This is a test message.");
+        System.out.println("Login attempt: " + userLoginDTO.getEmail());
         if (bindingResult.hasErrors()) {
             String errorMessages = bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)

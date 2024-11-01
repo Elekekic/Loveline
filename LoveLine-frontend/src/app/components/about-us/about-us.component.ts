@@ -81,6 +81,8 @@ export class AboutUsComponent {
       });
     });
   }
+
+  
   FaqAnimations(): void {
     const faqToggles = document.querySelectorAll('.faq-toggle');
     const faqs = document.querySelectorAll('.faq-body');

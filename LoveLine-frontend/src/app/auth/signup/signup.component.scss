@@ -1,0 +1,122 @@
+$bg-gradient: linear-gradient(180deg,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.3) 30%);
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background-image:$bg-gradient, url("../../../assets/img/try12.jpg");
+    backdrop-filter: blur(20px);
+}
+
+h1 {
+    font-family: "Arimo";
+    font-size: clamp(1rem, 9vw, 9rem);
+    font-weight: bold;
+    margin: 0;
+    color: var(--text-color);
+}
+
+h2 {
+    font-family: "Arimo";
+    font-size: clamp(1rem, 5vw, 2.2rem);
+    font-weight: bold;
+    margin-top: 4vw;
+    margin: 0;
+    margin-right: -0.5em;
+    color: var(--text-color);
+}
+
+h3 {
+    font-family: "Arimo";
+    font-size: clamp(1rem, 5vw, 2.2rem);
+    font-weight: bold;
+    margin: 0;
+    margin-right: -0.5em;
+    color: var(--text-color);
+}
+
+a {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    font-family: "Garet";
+    text-decoration: none;
+    margin: 0 8px;
+    color: var(--link-color);
+    padding: 15px 0;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+
+footer {
+    margin-top: 15rem;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 15vw;
+}
+
+
+span.word,
+span.char {
+    white-space: pre;
+    display: inline-block;
+}
+
+a span.word {
+    margin-right: 0.2em !important;
+}
+
+svg {
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+a:hover {
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+p {
+    color: var(--text-color);
+    font-size: 16px;
+    font-family: "Garet";
+    margin: 5px 0;
+}
+
+.loveline-logo img {
+    width: 140px;
+}
+
+header {
+    top: 0;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3%;
+    width: 100%;
+    z-index: 3;
+    height: 7em;
+    font-family: "Arimo";
+    font-size: clamp(0.66rem, 2vw, 1rem);
+}
+
+.menu {
+    display: flex;
+    align-content: center;
+    justify-content: space-around;
+}
+
+.menu a {
+    padding: 0 0 0 3rem;
+}

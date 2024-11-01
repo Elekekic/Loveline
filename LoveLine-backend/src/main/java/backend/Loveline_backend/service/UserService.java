@@ -258,7 +258,7 @@ public class UserService {
             // Add inline images for the email
             ClassPathResource logoResource = new ClassPathResource("static/logo.png");
             helper.addInline("logoImage", logoResource);
-            ClassPathResource bannerResource = new ClassPathResource("static/banner.gif");
+            ClassPathResource bannerResource = new ClassPathResource("static/banner.mp4");
             helper.addInline("bannerGif", bannerResource);
 
             javaMailSender.send(mimeMessage);
