@@ -40,9 +40,24 @@
         </div>
     </div>
 
-
-    <div class="carousel-sct">
-        <!-- will add later an carousel here -->
+    <div class="carousel-container">
+        <div class="carousel" #carousel>
+            <div class="carousel-item" *ngFor="let item of items; let i = index" [ngClass]="{
+              'active': i === currentSlide,
+              'left': i === (currentSlide - 1 + items.length) % items.length,
+              'right': i === (currentSlide + 1) % items.length
+            }">
+                <img [src]="item.image" alt="Carousel image" />
+                <div class="carousel-caption" *ngIf="i === currentSlide">
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.description }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-controls">
+            <button (click)="previousSlide()">&#8249;</button>
+            <button (click)="nextSlide()">&#8250;</button>
+        </div>
     </div>
 
     <div class="first-sct">
@@ -61,7 +76,9 @@
             </div>
             <div class="ft-2">
                 <h3>Fun Quizzes</h3>
-                <p>Explore quizzes that deepen your understanding of each other.</p>
+                <p>Explore quizzes that deepen your understanding of each other while having fun!
+
+                </p>
             </div>
             <div class="ft-3">
                 <h3>User-Friendly Interface</h3>
@@ -134,25 +151,10 @@
                     <div class="faq" id="accordion">
                         <div class="faq-header" id="faqHeading-4">
                             <button class="faq-toggle" data-target="#faqCollapse-4">
-                                What if I need help?
-                            </button>
-                        </div>
-                        <div id="faqCollapse-4" class="faq-body">
-                            <p> If you have any questions or need assistance, our support team is here to help. You
-                                can reach out via our contact page for prompt responses. We're dedicated to ensuring
-                                you have the best experience possible.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="faq-questions">
-                    <div class="faq" id="accordion">
-                        <div class="faq-header" id="faqHeading-5">
-                            <button class="faq-toggle" data-target="#faqCollapse-5">
                                 How do I report an issue?
                             </button>
                         </div>
-                        <div id="faqCollapse-5" class="faq-body">
+                        <div id="faqCollapse-4" class="faq-body">
                             <p>If you come across any problems while using Uberly, you have the option to
                                 report them via our website to our Admins or by emailing our team.
                                 We will then investigate the issue and take necessary action to resolve it.
@@ -170,8 +172,8 @@
                 <a target="_blank" href="https://www.linkedin.com/in/elena-kekic-/">Linkedin </a>
             </div>
             <div>
-                <p>© 2024 Loveline. All rights reserved </p> 
-                
+                <p>© 2024 Loveline. All rights reserved </p>
+
             </div>
             <div>
                 <p>Privacy Policy</p>

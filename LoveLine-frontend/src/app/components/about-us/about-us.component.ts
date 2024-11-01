@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { CarouselItem } from 'src/app/interfaces/carousel-item';
 
 @Component({
   selector: 'app-about-us',
@@ -8,6 +8,21 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
   styleUrls: ['./about-us.component.scss']
 })
 export class AboutUsComponent {
+  @ViewChild('carousel', { static: false }) carousel!: ElementRef;
+  currentSlide = 0;
+
+  items: CarouselItem[] = [
+    { image: '../../../assets/img/C-item1.jpg', title: 'Aquarium Dates', description: 'Discover marine life together' },
+    { image: '../../../assets/img/C-item2.jpg', title: 'Dinner Out', description: 'Enjoy a delicious meals and quality time' },
+    { image: '../../../assets/img/C-item3.jpg', title: 'Photo Booth', description: 'Capture fun moments together in a photo booth' },
+    { image: '../../../assets/img/C-item4.jpg', title: 'Table Games', description: 'Enjoy a competition with board games' },
+    { image: '../../../assets/img/C-item5.jpg', title: 'Cinema Night', description: 'Watch a movie of your choice go to a cinema!' },
+    { image: '../../../assets/img/C-item6.jpg', title: 'Go Kart Date', description: 'Race each other for an exciting and competitive experience' },
+    { image: '../../../assets/img/C-item7.jpg', title: 'Skiing Holiday', description: 'Enjoy thrilling winter sports together' },
+];
+
+
+
 
   
   ngOnInit(): void {
@@ -16,8 +31,30 @@ export class AboutUsComponent {
 
   ngAfterViewInit() {
     this.FaqAnimations();
+    this.updateSlide();
   }
 
+  previousSlide() {
+    this.currentSlide = (this.currentSlide > 0) ? this.currentSlide - 1 : this.items.length - 1;
+    this.updateSlide();
+  }
+
+  nextSlide() {
+    this.currentSlide = (this.currentSlide < this.items.length - 1) ? this.currentSlide + 1 : 0;
+    this.updateSlide();
+  }
+
+
+  updateSlide() {
+    const offset = -this.currentSlide * 170;
+
+    gsap.to(this.carousel.nativeElement, {
+      x: offset,
+      duration: 0.8,
+      ease: 'power4.out'
+    });
+  }
+  
 
 
   
