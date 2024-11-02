@@ -174,7 +174,6 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
         // Save the user if it's new or has changes
         userRepository.save(user);
-        sendMailProfileCreated(user.getEmail(), user.getName(), user.getSurname());
         return user;
     }
 
@@ -238,7 +237,6 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
                     "<html>" +
                             "<body style='font-family: Poppins, Helvetica, sans-serif;'>" +
                             "<div style='max-width: 600px; margin: 0 auto;'>" +
-                            "<img src='cid:bannerGif' alt='Welcome Banner' style='width: 100%%; height: auto;'>" +
                             "<h1>Dear %s %s,</h1>" +
                             "<h2 style='margin-bottom: 0;'>Your Loveline account has been successfully created! \uD83D\uDC98 <br>We can't wait to see you on our platform! \uD83D\uDC40</h2>" +
                             "<p>You can now access the website using the credentials you provided during registration. </p>" +
@@ -273,8 +271,6 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
             // Add inline images for the email
             ClassPathResource logoResource = new ClassPathResource("static/logo.png");
             helper.addInline("logoImage", logoResource);
-            ClassPathResource bannerResource = new ClassPathResource("static/banner.gif");
-            helper.addInline("bannerGif", bannerResource);
 
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {

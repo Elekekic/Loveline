@@ -41,10 +41,6 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             // Generate the token
             AuthenticationResponse authResponse = authService.authenticateOAuth2UserAndCreateToken(email);
 
-            logger.info("JWT token created for OAuth2 user: {}", email);
-            // Set the token in the response header
-            response.setHeader("Authorization", "Bearer " + authResponse.getToken());
-
             // Set the user in the response body
             User user = userService.getUserByEmail(email);
             authResponse.setUser(user);

@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { AuthData } from './auth-data';
 import { SignUp } from './sign-up';
 import { Login } from './login';
@@ -44,6 +44,8 @@ export class AuthService {
       })
     );
   }
+
+  
 
   setUser(user: AuthData | null) {
     this.authSub.next(user);

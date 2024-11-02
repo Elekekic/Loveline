@@ -1,6 +1,6 @@
 $bg-gradient: linear-gradient(180deg,
-    rgba(0, 0, 0, 0.4) 0%,
-    rgba(0, 0, 0, 0.3) 30%);
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0.3) 30%);
 
 * {
     box-sizing: border-box;
@@ -8,11 +8,11 @@ $bg-gradient: linear-gradient(180deg,
 
 body {
     display: flex;
-    justify-items: center;
+    justify-content: center !important;
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background-image:$bg-gradient, url("../../../assets/img/try12.jpg");
+    background-image: $bg-gradient, url("../../../assets/img/try12.jpg");
     backdrop-filter: blur(20px);
 }
 
@@ -26,11 +26,8 @@ h1 {
 
 h2 {
     font-family: "Arimo";
-    font-size: clamp(1rem, 5vw, 2.2rem);
+    font-size: clamp(1rem, 5vw, 4rem);
     font-weight: bold;
-    margin-top: 4vw;
-    margin: 0;
-    margin-right: -0.5em;
     color: var(--text-color);
 }
 
@@ -122,4 +119,63 @@ header {
 
 .menu a {
     padding: 0 0 0 3rem;
+}
+
+.links {
+    display: flex;
+}
+
+
+.input-group {
+    width: 35%;
+}
+
+.input {
+    width: 100%;
+    color: var(--link-color);
+    height: 44px;
+    background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(90px);
+    border-radius: 10px;
+    padding: 0 1rem;
+    border: 2px solid transparent;
+    font-size: 1rem;
+    transition: border-color .3s cubic-bezier(.25, .01, .25, 1) 0s, color .3s cubic-bezier(.25, .01, .25, 1) 0s, background .2s cubic-bezier(.25, .01, .25, 1) 0s;
+}
+
+.label {
+    font-family: "Arimo";
+    display: block;
+    margin-bottom: .3rem;
+    font-size: .9rem;
+    font-weight: bold;
+    color: var(--link-color);
+
+    transition: color .3s cubic-bezier(.25, .01, .25, 1) 0s;
+}
+
+.input:hover,
+.input:focus,
+.input-group:hover .input {
+    outline: none;
+    border-color: var(--link-color);
+}
+
+.input-group:hover .label,
+.input:focus {
+    color: var(--text-color);
+}
+
+.button {
+    padding: 10px 20px;
+    margin: 0 3px;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: "Garet", sans-serif;
+    color: var(--text-color);
+    text-transform: uppercase;
+    cursor: pointer;
+    background-color: white;
 }

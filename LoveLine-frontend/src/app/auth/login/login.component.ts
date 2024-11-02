@@ -43,7 +43,6 @@ constructor(private authSrv: AuthService, private router: Router) { }
       }
     );
   }
-
   
   
   iconsMenuAnimations(): void {

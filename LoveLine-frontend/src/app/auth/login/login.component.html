@@ -22,28 +22,24 @@
     </header>
 
     <div class="form-container">
+        <h2>WELCOME BACK TO LOVELINE </h2>
 
         <form class="form" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
 
-            <div>
-                <input type="input" class="form__field" placeholder="Email" name="email" id="email" ngModel
-                    #email="ngModel" required>
-                <label for="email" class="form__label">Email</label>
-                <div *ngIf="email.invalid && email.touched" class="error-message">
-                    You must fill out this field.
-                </div>
+            <div class="input-group">
+                <label for="email" class="label">Email</label>
+                <input autocomplete="off" placeholder="Email" name="email" ngModel
+                #email="ngModel" required id="email" class="input" type="email">
             </div>
 
-            <div>
-                <input type="password" class="form__field" placeholder="Password" name="password" id="password" ngModel
-                    autocomplete="new-password" #password="ngModel" required>
-                <label for="password" class="form__label">Password</label>
-                <div *ngIf="password.invalid && password.touched" class="error-message">
-                    You must fill out this field.
-                </div>
+            <div class="input-group">
+                <label for="password" class="label">Password</label>
+                <input type="password" placeholder="Password" name="password" id="password" ngModel
+                autocomplete="new-password" #password="ngModel" required class="input">
             </div>
 
-            <button type="submit" [disabled]="loginForm.invalid" class="button">
+
+            <button type="submit" class="button">
                 Login </button>
 
             <div *ngIf="errorMessage" class="error-message mb-5">
@@ -53,10 +49,13 @@
 
         <div>
             <p>Or log in with:</p>
-            <a href="/oauth2/authorization/github">Login with GitHub</a><br>
-            <a href="/oauth2/authorization/google">Login with Google</a>
+            <div class="links">
 
+                <a href="http://localhost:8080/oauth2/authorization/github">Login with GitHub</a>
+                <a href="http://localhost:8080/oauth2/authorization/google">Login with Google</a>
+            </div>
         </div>
+
 
     </div>
 </body>
